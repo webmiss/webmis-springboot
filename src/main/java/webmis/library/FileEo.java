@@ -249,8 +249,6 @@ public class FileEo {
       fs.close();
     }catch(IOException e){
       System.out.println("读取文件失败: "+e.getMessage());
-    }finally{
-      try { fs.close(); }catch(IOException e) { }
     }
     return bytes;
   }

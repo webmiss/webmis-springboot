@@ -175,6 +175,12 @@ public class Model extends Base {
   public void Table(String table) {
     _table = table;
   }
+  /* 表 */
+  public void partition(String... partition) {
+    JSONArray vals = new JSONArray();
+    for(int i=0; i<partition.length; i++) vals.add(partition[i]);
+    _table += "  PARTITION(" + Util.Implode(",", vals) + ")";
+  }
   /* 关联-INNER */
   public void Join(String table, String on) {
     _table += " INNER JOIN " + table + " ON " + on;
