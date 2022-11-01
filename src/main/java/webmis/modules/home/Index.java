@@ -2,12 +2,9 @@ package webmis.modules.home;
 
 import java.util.HashMap;
 
-import com.alibaba.fastjson.JSONObject;
-
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -15,9 +12,7 @@ import webmis.config.Env;
 import webmis.library.Captcha;
 import webmis.library.FileEo;
 import webmis.library.Qrcode;
-import webmis.library.Upload;
 import webmis.service.Base;
-import webmis.util.Util;
 
 @RestController
 @Controller("Index")
@@ -65,21 +60,6 @@ public class Index extends Base{
       FileEo.Writer(file, ct);
     }
     return FileEo.Bytes(file);
-  }
-
-  /* OSS-上传回调 */
-  @RequestMapping("ossCallback")
-  String OssCallback(@RequestBody JSONObject param) {
-    // 验证
-    if(!Upload.OssPolicyVerify(param)) return "";
-    // 数据处理
-    String text = Util.JsonEncode(param);
-    Util.Exec("echo "+text+" > public/upload/callback.txt");
-    // 返回
-    HashMap<String,Object> res;
-    res = new HashMap<String,Object>();
-    res.put("Status", "Ok");
-    return GetJSON(res);
   }
 
 }
