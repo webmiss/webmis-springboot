@@ -182,6 +182,7 @@ public class SysUser extends Base {
       uData.put("id", uid);
       uData.put("tel", tel);
       uData.put("password", Hash.Md5(passwd));
+      uData.put("rtime", Util.Time());
       m1.Values(uData);
       sql = m1.InsertSQL();
       ps = m1.Bind(conn, sql[0], sql[1]);
@@ -274,10 +275,10 @@ public class SysUser extends Base {
     m.Columns("id");
     m.Where("tel=?", tel);
     HashMap<String, Object> user = m.FindFirst();
-    if(user.isEmpty()){
+    if(!user.isEmpty() && !user.get("id").equals(uid)){
       res = new HashMap<String,Object>();
       res.put("code", 4000);
-      res.put("msg", "该用户不存在!");
+      res.put("msg", "该用户已存在!");
       return GetJSON(res);
     }
     // 更新
