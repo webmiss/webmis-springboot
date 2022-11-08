@@ -84,6 +84,7 @@ public class Data extends Base {
     HashMap<String, Object> one = m.FindFirst();
     one.put("date", date);
     one.put("time", t);
+    one.put("table", table);
     return one;
   }
 
